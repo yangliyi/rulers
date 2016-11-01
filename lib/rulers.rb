@@ -10,7 +10,11 @@ module Rulers
 
       klass, act = get_controller_and_action(env)
       controller = klass.new(env)
-      text = controller.send(act)
+      begin
+        text = controller.send(act)
+      rescue => e
+        return [404, {'Content-Type' => 'text/html'}, [File.read(File.expand_path("404.html"))]]
+      end
       [200, {'Content-Type' => 'text/html'}, [text]]
     end
   end
