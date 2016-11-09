@@ -28,6 +28,7 @@ module Rulers
 
       klass, act = get_controller_and_action(env)
       controller = klass.new(env)
+      # Would raise an error if it can't find the controller
       begin
         text = controller.send(act)
       rescue => e
